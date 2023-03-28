@@ -52,7 +52,7 @@
         android:id="@+id/btn_shuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_plus_one_24"
+        android:src="@drawable/ic_baseline_autorenew_24"
         app:layout_constraintTop_toBottomOf="@id/viewpager1"
         app:layout_constraintBottom_toTopOf="@id/viewpager2"
         app:layout_constraintStart_toStartOf="parent"
