@@ -55,13 +55,6 @@ class MainActivity : AppCompatActivity() {
         viewPager2!!.offscreenPageLimit = 2
         viewPager2!!.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
 
-//        val pickImageButton = findViewById<ImageButton>(R.id.btn_pick_img_1)
-//        pickImageButton.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, PICK_IMAGE_REQUEST1)
-//        }
-
         val pickImageButton = findViewById<ImageButton>(R.id.btn_pick_img_1)
         pickImageButton.setOnClickListener {
             val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
@@ -107,9 +100,45 @@ class MainActivity : AppCompatActivity() {
 
         val pickImageButton2 = findViewById<ImageButton>(R.id.btn_pick_img_2)
         pickImageButton2.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST2)
+            val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Add Photo!")
+            builder.setItems(options) { dialog, item ->
+                when {
+                    options[item] == "Take Photo" -> {
+                        // Create a file to store the captured image
+                        val photoFile: File? = try {
+                            createImageFile()
+                        } catch (ex: IOException) {
+                            // Error occurred while creating the File
+                            null
+                        }
+                        // Continue only if the file was successfully created
+                        photoFile?.also {
+                            // Get the URI of the file
+                            selectedImageUri = FileProvider.getUriForFile(
+                                this,
+                                "com.example.android.fileprovider",
+                                it
+                            )
+                            // Launch the camera app
+                            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImageUri)
+                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                        }
+                    }
+                    options[item] == "Choose from Gallery" -> {
+                        // Launch the gallery app
+                        val intent = Intent(Intent.ACTION_PICK)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST2)
+                    }
+                    options[item] == "Cancel" -> {
+                        dialog.dismiss()
+                    }
+                }
+            }
+            builder.show()
         }
 
         val shuffle = findViewById<ImageButton>(R.id.btn_shuffle)
