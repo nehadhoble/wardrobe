@@ -60,6 +60,18 @@
         tools:layout_editor_absoluteX="172dp"
         tools:layout_editor_absoluteY="351dp" />
 
+    <ImageButton
+        android:id="@+id/btn_like"
+        android:layout_width="65dp"
+        android:layout_height="59dp"
+        android:src="@drawable/icons8_favorite_50"
+        app:layout_constraintBottom_toTopOf="@id/viewpager2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="@id/btn_shuffle"
+        app:layout_constraintTop_toBottomOf="@id/viewpager1"
+        app:layout_constraintVertical_bias="0.666" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager2"
         android:layout_width="350dp"

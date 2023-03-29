@@ -162,6 +162,11 @@ class MainActivity : AppCompatActivity() {
             vpAdapter2.notifyDataSetChanged()
         }
 
+        val like = findViewById<ImageButton>(R.id.btn_like)
+        like.setOnClickListener {
+            like.setBackgroundColor(0xFF0000)
+        }
+
 }
 
     // Function to create a file to store the captured image
